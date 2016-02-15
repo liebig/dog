@@ -1,4 +1,4 @@
-package swantje.rtf.app;
+package dog.app;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
