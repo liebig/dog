@@ -86,7 +86,8 @@ public class SplashWindow {
 		sloganLabel.setBounds(152, 58, 206, 16);
 		frame.getContentPane().add(sloganLabel);
 		
-		JLabel authorLabel = new JLabel("by Marc Liebig");
+		JLabel authorLabel = new JLabel("Version 1.0.0");
+		authorLabel.setEnabled(false);
 		authorLabel.setBounds(152, 78, 91, 16);
 		frame.getContentPane().add(authorLabel);
 		
@@ -95,6 +96,10 @@ public class SplashWindow {
 		legalLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		legalLabel.setBounds(12, 123, 366, 46);
 		frame.getContentPane().add(legalLabel);
+		
+		JLabel lblDevelopedByMarc = new JLabel("Developed by Marc Liebig");
+		lblDevelopedByMarc.setBounds(152, 104, 166, 16);
+		frame.getContentPane().add(lblDevelopedByMarc);
 		
 		
 		
