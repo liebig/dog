@@ -238,6 +238,13 @@ public class GeneratorService implements Runnable {
 					baos.close();
 
 					Image img = Image.getInstance(imageInByte);
+					
+					boolean isPortrait = false;
+					
+					// Check if image is portrait format
+					if (img.getHeight() > img.getWidth()) {
+						isPortrait = true;
+					}
 
 					// Load maxScalingString from properties
 					String maxScalingString = Application.properties
@@ -329,9 +336,14 @@ public class GeneratorService implements Runnable {
 						// Add image number
 						imageParagraph.add(new Phrase(GeneratorService
 								.getFormattedImageNumber(i)));
+						
 						imageParagraph.add(breakParagraph);
-						imageParagraph.add(breakParagraph);
-
+						
+						// If image is landscape, we add another new line
+						if (!isPortrait) {
+							imageParagraph.add(breakParagraph);
+						}
+						
 						document.add(imageParagraph);
 
 					} else {
@@ -345,9 +357,7 @@ public class GeneratorService implements Runnable {
 						// Add image number
 						imageParagraph.add(new Phrase(GeneratorService
 								.getFormattedImageNumber(i)));
-						imageParagraph.add(breakParagraph);
-						imageParagraph.add(breakParagraph);
-
+						
 						document.add(imageParagraph);
 
 						// Check if there are more images to add and create a new page if true
