@@ -21,6 +21,7 @@ package dog.app.service;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import dog.app.domain.Image;
 
@@ -45,7 +46,14 @@ public class FileService {
 	}
 	
 	public static File[] getFilesFromFolder(File folder) {
-		return folder.listFiles();
+		
+		// Get all files from folder
+		File[] fileList = folder.listFiles();
+		
+		// Sort files array
+		Arrays.sort(fileList);
+		
+		return fileList;
 	}
 	
 	public static File[] getFilesFromFolderByExtension(File folder, String extension) {
@@ -66,6 +74,9 @@ public class FileService {
 	        	 return false;
         	 }
 		});
+		
+		// Sort files array
+		Arrays.sort(files);
 		
 		return files;
 	}
