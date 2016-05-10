@@ -86,7 +86,7 @@ public class SplashWindow {
 		sloganLabel.setBounds(152, 58, 206, 16);
 		frame.getContentPane().add(sloganLabel);
 		
-		JLabel authorLabel = new JLabel("Version 1.0.0");
+		JLabel authorLabel = new JLabel("Version 1.0.1");
 		authorLabel.setEnabled(false);
 		authorLabel.setBounds(152, 78, 91, 16);
 		frame.getContentPane().add(authorLabel);

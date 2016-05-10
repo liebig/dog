@@ -140,6 +140,11 @@ public class GeneratorService implements Runnable {
 				RtfFont fontSmall = new RtfFont("Arial", 9);
 
 				Paragraph breakParagraph = new Paragraph("");
+				
+				Paragraph doubleBreakParagraph = new Paragraph();
+				doubleBreakParagraph.setFont(fontDefault);
+				doubleBreakParagraph.setAlignment(Element.ALIGN_LEFT);
+				doubleBreakParagraph.add(Chunk.NEWLINE);
 
 				Paragraph p = new Paragraph("\n", fontSmall);
 				p.add("- Page ");
@@ -325,8 +330,7 @@ public class GeneratorService implements Runnable {
 						// Set header object
 						document.setHeader(header);
 
-						document.add(breakParagraph);
-						document.add(breakParagraph);
+						document.add(doubleBreakParagraph);
 
 						Paragraph imageParagraph = new Paragraph();
 						imageParagraph.setFont(fontDefault);
