@@ -1,20 +1,20 @@
 /*
  * Copyright (c) 2015 - 2016 Marc Liebig
- * 
- * This program is free software: you can redistribute it and/or modify 
- * it under the terms of the GNU Affero General Public License as 
- * published by the Free Software Foundation, either version 3 of the 
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public 
- * License along with this program.  If not, see 
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 // TODO
@@ -101,9 +101,9 @@ public class Application {
 	private static JButton btnDeleteAll;
 
 	private static JButton btnRefresh;
-	
+
 	private static JProgressBar progressBar;
-	
+
 	private static JFrame configWindow = new ConfigWindow();
 
 	final static Logger logger = Logger.getLogger(Application.class);
@@ -113,16 +113,16 @@ public class Application {
 
 	/*
 	 * Structure of properties file:
-	 * 
-	 * header-suffix: "" 
-	 * company: "" 
+	 *
+	 * header-suffix: ""
+	 * company: ""
 	 * resizing-value: 0
 	 * scaling-value: 0
 	 * log-level: warn
 	 */
 	public static Properties properties = new Properties();
 	private JButton btnConfig;
-	
+
 
 	/**
 	 * Launch the application.
@@ -135,34 +135,43 @@ public class Application {
 		} catch (Exception ex) {
 			logger.warn("Could not load properties", ex);
 		}
-		
+
 		// Load log level
 		String logLevel = Application.properties.getProperty("log-level", "");
 		// Set log level
-		switch (logLevel.toLowerCase()) {
-			case "all": 	logger.setLevel(Level.ALL);
-	    				 	break;
-			case "debug":  	logger.setLevel(Level.DEBUG);
-			 			   	break;
-			case "error":  	logger.setLevel(Level.ERROR);
-							break;
-			case "fatal":  	logger.setLevel(Level.FATAL);
-							break;
-			case "info":  	logger.setLevel(Level.INFO);
-							break;
-			case "off":  	logger.setLevel(Level.OFF);
-							break;
-			case "trace":  	logger.setLevel(Level.TRACE);
-							break;
-			case "warn":  	logger.setLevel(Level.WARN);
-							break;
-			default: 		logger.setLevel(Level.WARN);
+		String s = logLevel.toLowerCase();
+		if (s.equals("all")) {
+			logger.setLevel(Level.ALL);
+
+		} else if (s.equals("debug")) {
+			logger.setLevel(Level.DEBUG);
+
+		} else if (s.equals("error")) {
+			logger.setLevel(Level.ERROR);
+
+		} else if (s.equals("fatal")) {
+			logger.setLevel(Level.FATAL);
+
+		} else if (s.equals("info")) {
+			logger.setLevel(Level.INFO);
+
+		} else if (s.equals("off")) {
+			logger.setLevel(Level.OFF);
+
+		} else if (s.equals("trace")) {
+			logger.setLevel(Level.TRACE);
+
+		} else if (s.equals("warn")) {
+			logger.setLevel(Level.WARN);
+
+		} else {
+			logger.setLevel(Level.WARN);
 		}
-		
+
 		// Create and show Splash Window
 		final SplashWindow splashWindow = new SplashWindow();
 		splashWindow.frame.setVisible(true);
-		
+
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -173,8 +182,8 @@ public class Application {
 					UIManager
 							.setLookAndFeel("com.jtattoo.plaf.acryl.AcrylLookAndFeel");
 
-					URL resource = Application.class
-							.getResource("/resources/icons/picture.png");
+					URL resource = getClass().getClassLoader()
+							.getResource("icons/picture.png");
 					Icon pictureIcon = new ImageIcon(resource);
 
 					UIManager.put("Tree.leafIcon", pictureIcon);
@@ -184,7 +193,7 @@ public class Application {
 					FileService.addExtension("png");
 
 					final Application window = new Application();
-					
+
 					// Timer for showing splash screen only 4 seconds
 					new Timer().schedule(new TimerTask() {
 					    public void run() {
@@ -192,8 +201,8 @@ public class Application {
 					    	window.frmDogDocument.setVisible(true);
 					    }
 					}, 4000);
-					
-					
+
+
 				} catch (Exception ex) {
 					logger.error("Exception while configuring the application",
 							ex);
@@ -219,13 +228,13 @@ public class Application {
 		frmDogDocument = new JFrame();
 		frmDogDocument
 				.setIconImage(Toolkit.getDefaultToolkit().getImage(
-						Application.class
-								.getResource("/resources/icons/logo_dog.png")));
+						getClass().getClassLoader()
+								.getResource("icons/logo_dog.png")));
 		frmDogDocument.setTitle("DOG - Document Generator");
 		frmDogDocument.setBounds(100, 100, 450, 457);
 		frmDogDocument.setLocationRelativeTo(null);
 		frmDogDocument.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		// Center window
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 	    int x = (int) ((dimension.getWidth() - frmDogDocument.getWidth()) / 2);
@@ -306,8 +315,8 @@ public class Application {
 
 			}
 		});
-		btnGenerate.setIcon(new ImageIcon(Application.class
-				.getResource("/resources/icons/cog_go.png")));
+		btnGenerate.setIcon(new ImageIcon(getClass().getClassLoader()
+				.getResource("icons/cog_go.png")));
 
 		this.chckbxRtf = new JCheckBox("RTF");
 		chckbxRtf.setEnabled(false);
@@ -320,8 +329,8 @@ public class Application {
 
 		btnFolderAdd = new JButton("");
 		btnFolderAdd.setToolTipText("Add folder");
-		btnFolderAdd.setIcon(new ImageIcon(Application.class
-				.getResource("/resources/icons/folder_add.png")));
+		btnFolderAdd.setIcon(new ImageIcon(getClass().getClassLoader()
+				.getResource("icons/folder_add.png")));
 		btnFolderAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -424,8 +433,8 @@ public class Application {
 			}
 		});
 		btnFolderDelete.setToolTipText("Delete Folder");
-		btnFolderDelete.setIcon(new ImageIcon(Application.class
-				.getResource("/resources/icons/folder_delete.png")));
+		btnFolderDelete.setIcon(new ImageIcon(getClass().getClassLoader()
+				.getResource("icons/folder_delete.png")));
 
 		btnDeleteAll = new JButton("");
 		btnDeleteAll.addActionListener(new ActionListener() {
@@ -440,8 +449,8 @@ public class Application {
 			}
 		});
 		btnDeleteAll.setToolTipText("Delete all folders");
-		btnDeleteAll.setIcon(new ImageIcon(Application.class
-				.getResource("/resources/icons/delete.png")));
+		btnDeleteAll.setIcon(new ImageIcon(getClass().getClassLoader()
+				.getResource("icons/delete.png")));
 
 		btnRefresh = new JButton("");
 		btnRefresh.addActionListener(new ActionListener() {
@@ -457,12 +466,12 @@ public class Application {
 			}
 		});
 		btnRefresh.setToolTipText("Refresh folders");
-		btnRefresh.setIcon(new ImageIcon(Application.class
-				.getResource("/resources/icons/folder_magnify.png")));
-		
+		btnRefresh.setIcon(new ImageIcon(getClass().getClassLoader()
+				.getResource("icons/folder_magnify.png")));
+
 		progressBar = new JProgressBar();
 		progressBar.setEnabled(false);
-		
+
 		btnConfig = new JButton("");
 		btnConfig.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -470,7 +479,7 @@ public class Application {
 			}
 		});
 		btnConfig.setToolTipText("Configuration");
-		btnConfig.setIcon(new ImageIcon(Application.class.getResource("/resources/icons/cog.png")));
+		btnConfig.setIcon(new ImageIcon(getClass().getClassLoader().getResource("icons/cog.png")));
 		GroupLayout gl_mainPane = new GroupLayout(mainPane);
 		gl_mainPane.setHorizontalGroup(
 			gl_mainPane.createParallelGroup(Alignment.TRAILING)
@@ -585,16 +594,16 @@ public class Application {
 				Component c = super.getTreeCellRendererComponent(tree, value,
 						selected, expanded, isLeaf, row, focused);
 
-				URL resource = Application.class
-						.getResource("/resources/icons/picture.png");
+				URL resource = getClass().getClassLoader()
+						.getResource("icons/picture.png");
 				Icon pictureIcon = new ImageIcon(resource);
 
-				resource = Application.class
-						.getResource("/resources/icons/folder.png");
+				resource = getClass().getClassLoader()
+						.getResource("icons/folder.png");
 				Icon folderIcon = new ImageIcon(resource);
 
-				resource = Application.class
-						.getResource("/resources/icons/folder_go.png");
+				resource = getClass().getClassLoader()
+						.getResource("icons/folder_go.png");
 				Icon rootIcon = new ImageIcon(resource);
 
 				if (row == 0) {
@@ -624,11 +633,11 @@ public class Application {
 	}
 
 	public static synchronized void enableButtons() {
-		
+
 		// Disable progress bar
 		progressBar.setIndeterminate(false);
 		progressBar.setEnabled(false);
-		
+
 		// Enable buttons
 		btnDeleteAll.setEnabled(true);
 		btnFolderAdd.setEnabled(true);
@@ -638,14 +647,14 @@ public class Application {
 	}
 
 	public static synchronized void disableButtons() {
-		
+
 		// Disable buttons
 		btnDeleteAll.setEnabled(false);
 		btnFolderAdd.setEnabled(false);
 		btnFolderDelete.setEnabled(false);
 		btnGenerate.setEnabled(false);
 		btnRefresh.setEnabled(false);
-		
+
 		// Enable progress bar
 		progressBar.setEnabled(true);
 		progressBar.setIndeterminate(true);

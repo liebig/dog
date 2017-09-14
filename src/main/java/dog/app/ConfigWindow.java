@@ -1,20 +1,20 @@
 /*
  * Copyright (c) 2015 - 2016 Marc Liebig
- * 
- * This program is free software: you can redistribute it and/or modify 
- * it under the terms of the GNU Affero General Public License as 
- * published by the Free Software Foundation, either version 3 of the 
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful, but 
- * WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public 
- * License along with this program.  If not, see 
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 package dog.app;
@@ -44,7 +44,7 @@ import java.awt.Toolkit;
 public class ConfigWindow extends JFrame {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -6215513356222484179L;
 	private JPanel contentPane;
@@ -52,7 +52,7 @@ public class ConfigWindow extends JFrame {
 	private JTextField suffixField;
 	private JSpinner resizeSpinner;
 	private JSpinner scaleSpinner;
-	private JComboBox<String> comboBox;
+	private JComboBox comboBox;
 
 
 	/**
@@ -60,7 +60,7 @@ public class ConfigWindow extends JFrame {
 	 */
 	public ConfigWindow() {
 		setTitle("Configuration");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ConfigWindow.class.getResource("/resources/icons/cog.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("icons/cog.png")));
 		setAlwaysOnTop(true);
 		setResizable(false);
 		setBounds(100, 100, 400, 320);
@@ -68,13 +68,13 @@ public class ConfigWindow extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		// Center window
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 	    int x = (int) ((dimension.getWidth() - getWidth()) / 2);
 	    int y = (int) ((dimension.getHeight() - getHeight()) / 2);
 	    setLocation(x, y);
-		
+
 		JLabel configLabel = new JLabel("Configuration");
 		configLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		configLabel.setBounds(12, 13, 370, 33);
@@ -130,8 +130,8 @@ public class ConfigWindow extends JFrame {
 		scaleLabel.setBounds(12, 164, 130, 22);
 		contentPane.add(scaleLabel);
 
-		comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] { "All",
+		comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] { "All",
 				"Debug", "Info", "Warn", "Error", "Fatal", "Off" }));
 		comboBox.setSelectedIndex(0);
 		comboBox.setToolTipText("Select which messages should be logged");
@@ -156,15 +156,15 @@ public class ConfigWindow extends JFrame {
 		JButton OkButton = new JButton("OK");
 		OkButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				Application.properties.setProperty("company", companyField.getText());
 				Application.properties.setProperty("header-suffix", suffixField.getText());
 				Application.properties.setProperty("resizing-value", String.valueOf(resizeSpinner.getValue()));
 				Application.properties.setProperty("scaling-value", String.valueOf(scaleSpinner.getValue()));
 				Application.properties.setProperty("log-level", String.valueOf(comboBox.getSelectedItem()));
-				
+
 				Application.saveProperties();
-				
+
 				setVisible(false);
 			}
 		});
@@ -174,7 +174,7 @@ public class ConfigWindow extends JFrame {
 		this.addComponentListener(new ComponentAdapter() {
 			public void componentHidden(ComponentEvent e) {
 				/* code run when component hidden */
-				
+
 				// Center window
 				Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 			    int x = (int) ((dimension.getWidth() - getWidth()) / 2);
@@ -183,11 +183,11 @@ public class ConfigWindow extends JFrame {
 			}
 
 			public void componentShown(ComponentEvent e) {
-				
+
 				// Get configs
 				String companyName = Application.properties.getProperty("company", "");
 				String suffix = Application.properties.getProperty("header-suffix", "");
-				
+
 				String maxScalingString = Application.properties
 						.getProperty("scaling-value", "NaN");
 				int maxScalingValue;
@@ -196,7 +196,7 @@ public class ConfigWindow extends JFrame {
 				} catch (Exception ex) {
 					maxScalingValue = 0;
 				}
-				
+
 				String maxResizingString = Application.properties
 						.getProperty("resizing-value", "NaN");
 				int maxResizingValue;
@@ -205,16 +205,16 @@ public class ConfigWindow extends JFrame {
 				} catch (Exception ex) {
 					maxResizingValue = 0;
 				}
-				
+
 				String loglevel = Application.properties
 						.getProperty("log-level", "warn");
-				
+
 				// Set configs
 				setConfig(companyName, suffix, maxResizingValue, maxScalingValue, loglevel);
 			}
 		});
 	}
-	
+
 	private void setConfig(String company, String suffix, int resizing, int scaling, String loglevel) {
 		this.companyField.setText(company);
 		this.suffixField.setText(suffix);
